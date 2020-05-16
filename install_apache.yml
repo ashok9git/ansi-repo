@@ -1,6 +1,16 @@
 ---
-- name: installing apache2
-  apt:
-    name=apache2
-    state=present
+- name: Configuring Apache2
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: installing apache2
+      apt:
+        name=apache2
+        state=absent
+      when: ansible_os_family == "Debian"
+    - name: Installing httpd
+      yum:
+        name=httpd
+        state=absent
+      when: ansible_os_family == "RedHat"
 
